@@ -55,8 +55,7 @@ export default function AdminProductsPage() {
           </div>
           <Link
             to="/admin/products/new"
-            className="bg-blue-600 text-white text-sm font-semibold
-              px-4 py-2.5 rounded-xl hover:bg-blue-700 transition-colors"
+            className="bg-blue-600 text-white font-semibold px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-colors"
           >
             + Add Product
           </Link>
@@ -64,20 +63,25 @@ export default function AdminProductsPage() {
 
         {/* Filters */}
         <div className="flex gap-3 mb-6">
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5
-              text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <div className="flex-1 relative">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 pl-10
+                text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.5 5.5a7.5 7.5 0 0010.5 10.5z" />
+            </svg>
+          </div>
           <select
             value={stockFilter}
             onChange={(e) => setStockFilter(e.target.value)}
-            className="border border-gray-200 rounded-xl px-4 py-2.5
-              text-sm focus:outline-none focus:ring-2 focus:ring-blue-500
-              bg-white"
+            className="border border-gray-200 rounded-lg px-3.5 py-2.5
+              text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+              bg-white font-medium text-gray-700"
           >
             <option value="">All Stock</option>
             <option value="low">Low Stock (≤5)</option>
@@ -89,26 +93,26 @@ export default function AdminProductsPage() {
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b border-gray-100">
                 <tr>
-                  <th className="text-left px-5 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Product
                   </th>
-                  <th className="text-left px-4 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Category
                   </th>
-                  <th className="text-left px-4 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Price
                   </th>
-                  <th className="text-left px-4 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Stock
                   </th>
-                  <th className="text-left px-4 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Status
                   </th>
-                  <th className="text-right px-5 py-3.5 font-semibold text-gray-600">
+                  <th className="text-right px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Actions
                   </th>
                 </tr>
@@ -121,17 +125,16 @@ export default function AdminProductsPage() {
                     {/* Product name + image */}
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gray-100 rounded-lg
-                          overflow-hidden shrink-0">
+                        <div className="w-10 h-10 bg-gray-50 rounded-lg
+                          overflow-hidden shrink-0 flex items-center justify-center">
                           {product.image ? (
                             <img
                               src={product.image}
                               alt={product.name}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-contain p-0.5"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center
-                              justify-center text-lg">📱</div>
+                            <div className="w-full h-full bg-gray-100"></div>
                           )}
                         </div>
                         <div>
@@ -139,7 +142,7 @@ export default function AdminProductsPage() {
                             line-clamp-1 max-w-[200px]">
                             {product.name}
                           </p>
-                          <p className="text-xs text-gray-400">{product.sku}</p>
+                          <p className="text-xs text-gray-500">{product.sku}</p>
                         </div>
                       </div>
                     </td>
@@ -176,11 +179,11 @@ export default function AdminProductsPage() {
 
                     {/* Active status */}
                     <td className="px-4 py-4">
-                      <span className={`inline-flex px-2.5 py-1 rounded-full
-                        text-xs font-semibold ${
+                      <span className={`inline-flex px-2.5 py-1 rounded-md
+                        text-xs font-semibold border ${
                         product.is_active
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-gray-100 text-gray-500'
+                          ? 'bg-green-50 text-green-700 border-green-200'
+                          : 'bg-gray-50 text-gray-600 border-gray-200'
                       }`}>
                         {product.is_active ? 'Active' : 'Hidden'}
                       </span>
@@ -191,9 +194,9 @@ export default function AdminProductsPage() {
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           to={`/admin/products/${product.id}/edit`}
-                          className="text-xs bg-blue-50 text-blue-700 font-semibold
-                            px-3 py-1.5 rounded-lg hover:bg-blue-100
-                            transition-colors"
+                          className="text-xs bg-blue-50 text-blue-600 font-semibold
+                            px-3 py-1.5 rounded-md hover:bg-blue-100
+                            transition-colors border border-blue-200"
                         >
                           Edit
                         </Link>
@@ -201,8 +204,8 @@ export default function AdminProductsPage() {
                           onClick={() => handleDelete(product)}
                           disabled={deleteMutation.isPending}
                           className="text-xs bg-red-50 text-red-600 font-semibold
-                            px-3 py-1.5 rounded-lg hover:bg-red-100
-                            transition-colors disabled:opacity-50"
+                            px-3 py-1.5 rounded-md hover:bg-red-100
+                            transition-colors disabled:opacity-50 border border-red-200"
                         >
                           Hide
                         </button>

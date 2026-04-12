@@ -146,7 +146,7 @@ export default function AdminProductFormPage() {
 
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700
-            px-4 py-3 rounded-xl text-sm mb-6 whitespace-pre-line">
+            px-3.5 py-2.5 rounded-lg text-sm mb-6 whitespace-pre-line">
             {error}
           </div>
         )}
@@ -154,28 +154,28 @@ export default function AdminProductFormPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
 
           {/* Basic Info */}
-          <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 space-y-4">
             <h2 className="font-bold text-gray-900 mb-2">Basic Information</h2>
 
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Product Name *
               </label>
               <input
                 type="text" name="name" value={form.name}
                 onChange={handleChange} required
                 placeholder="Samsung Galaxy A55"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3
-                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
+                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             {/* Slug */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Slug *
-                <span className="text-gray-400 font-normal ml-1">
+                <span className="text-gray-500 font-normal ml-1">
                   (auto-generated from name)
                 </span>
               </label>
@@ -183,23 +183,23 @@ export default function AdminProductFormPage() {
                 type="text" name="slug" value={form.slug}
                 onChange={handleChange} required
                 placeholder="samsung-galaxy-a55"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3
-                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500
-                  font-mono"
+                className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
+                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                  font-mono bg-gray-50 text-gray-600"
               />
             </div>
 
             {/* Category */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Category *
               </label>
               <select
                 name="category_id" value={form.category_id}
                 onChange={handleChange} required
-                className="w-full border border-gray-200 rounded-xl px-4 py-3
-                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500
-                  bg-white"
+                className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
+                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                  bg-white text-gray-700"
               >
                 <option value="">Select a category</option>
                 {categories?.map((cat) => (
@@ -210,107 +210,107 @@ export default function AdminProductFormPage() {
 
             {/* Brand */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Brand
               </label>
               <input
                 type="text" name="brand" value={form.brand}
                 onChange={handleChange}
                 placeholder="Samsung"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3
-                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
+                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Description
               </label>
               <textarea
                 name="description" value={form.description}
                 onChange={handleChange} rows={4}
                 placeholder="Full product description..."
-                className="w-full border border-gray-200 rounded-xl px-4 py-3
-                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500
+                className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
+                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
                   resize-none"
               />
             </div>
           </div>
 
           {/* Pricing and Inventory */}
-          <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 space-y-4">
             <h2 className="font-bold text-gray-900 mb-2">Pricing & Inventory</h2>
 
             <div className="grid grid-cols-2 gap-4">
               {/* Selling Price */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-semibold text-gray-700 mb-1">
                   Selling Price (₹) *
                 </label>
                 <input
                   type="number" name="price" value={form.price}
                   onChange={handleChange} required min="0" step="0.01"
                   placeholder="24999"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3
-                    text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
+                    text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
               {/* Compare Price */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-semibold text-gray-700 mb-1">
                   MRP / Compare Price (₹)
                 </label>
                 <input
                   type="number" name="compare_price" value={form.compare_price}
                   onChange={handleChange} min="0" step="0.01"
                   placeholder="27999 (optional)"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3
-                    text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
+                    text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
               {/* Stock */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-semibold text-gray-700 mb-1">
                   Stock Quantity *
                 </label>
                 <input
                   type="number" name="stock" value={form.stock}
                   onChange={handleChange} required min="0"
                   placeholder="20"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3
-                    text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
+                    text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
               {/* SKU */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-semibold text-gray-700 mb-1">
                   SKU *
                 </label>
                 <input
                   type="text" name="sku" value={form.sku}
                   onChange={handleChange} required
                   placeholder="SAM-A55-BLK-128"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3
+                  className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
                     text-sm font-mono focus:outline-none focus:ring-2
-                    focus:ring-blue-500"
+                    focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
             </div>
           </div>
 
           {/* Image and Visibility */}
-          <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 space-y-4">
             <h2 className="font-bold text-gray-900 mb-2">Image & Visibility</h2>
 
             {/* Image URL */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Image URL
-                <span className="text-gray-400 font-normal ml-1">
+                <span className="text-gray-500 font-normal ml-1">
                   (paste a Cloudinary or direct image URL)
                 </span>
               </label>
@@ -318,16 +318,16 @@ export default function AdminProductFormPage() {
                 type="url" name="image" value={form.image}
                 onChange={handleChange}
                 placeholder="https://res.cloudinary.com/..."
-                className="w-full border border-gray-200 rounded-xl px-4 py-3
-                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5
+                  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
               {/* Image preview */}
               {form.image && (
                 <img
                   src={form.image}
                   alt="Preview"
-                  className="mt-3 w-24 h-24 object-cover rounded-xl
-                    border border-gray-200"
+                  className="mt-3 w-24 h-24 object-contain rounded-lg
+                    border border-gray-200 bg-gray-50 p-1"
                   onError={(e) => e.target.style.display = 'none'}
                 />
               )}
@@ -364,8 +364,8 @@ export default function AdminProductFormPage() {
             <button
               type="submit"
               disabled={saveMutation.isPending}
-              className="flex-1 bg-blue-600 text-white font-semibold py-3
-                rounded-xl hover:bg-blue-700 disabled:opacity-60
+              className="flex-1 bg-blue-600 text-white font-semibold py-2.5 px-4
+                rounded-lg hover:bg-blue-700 disabled:opacity-60
                 disabled:cursor-not-allowed transition-colors"
             >
               {saveMutation.isPending
@@ -374,14 +374,14 @@ export default function AdminProductFormPage() {
             </button>
             <Link
               to="/admin/products"
-              className="px-6 py-3 border-2 border-gray-200 text-gray-600
-                font-semibold rounded-xl hover:bg-gray-50 transition-colors"
+              className="px-6 py-2.5 border border-gray-200 text-gray-700
+                font-semibold rounded-lg hover:bg-gray-50 transition-colors"
             >
               Cancel
             </Link>
           </div>
-
         </form>
+
       </div>
     </div>
   )

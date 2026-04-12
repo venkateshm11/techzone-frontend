@@ -14,17 +14,15 @@ export default function OrdersPage() {
 
   if (!orders || orders.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col
-        items-center justify-center gap-4">
-        <p className="text-5xl">📋</p>
-        <h2 className="text-xl font-semibold text-gray-700">No orders yet</h2>
-        <p className="text-gray-400 text-sm">
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center gap-4">
+        <div className="w-16 h-16 bg-gray-200 rounded-full" />
+        <h2 className="text-xl font-semibold text-gray-800">No orders yet</h2>
+        <p className="text-gray-500 text-sm">
           Your order history will appear here
         </p>
         <Link
           to="/products"
-          className="bg-blue-600 text-white font-semibold px-6
-            py-3 rounded-xl hover:bg-blue-700 transition-colors mt-2"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors mt-4"
         >
           Start Shopping
         </Link>
@@ -43,8 +41,8 @@ export default function OrdersPage() {
             <Link
               key={order.id}
               to={`/orders/${order.id}`}
-              className="block bg-white rounded-2xl shadow-sm p-5
-                hover:shadow-md transition-shadow"
+              className="block bg-white rounded-xl border border-gray-100 shadow-sm p-6
+                hover:shadow-md hover:border-gray-200 transition-all duration-200"
             >
               {/* Order header */}
               <div className="flex items-start justify-between mb-3">
@@ -52,7 +50,7 @@ export default function OrdersPage() {
                   <p className="font-semibold text-gray-900">
                     Order #{order.id}
                   </p>
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-xs text-gray-500 mt-0.5">
                     {new Date(order.created_at).toLocaleDateString('en-IN', {
                       day  : 'numeric',
                       month: 'long',
@@ -80,23 +78,22 @@ export default function OrdersPage() {
                         <img
                           src={item.product.image}
                           alt={item.product.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain p-0.5"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center
-                          justify-center text-lg">📱</div>
+                        <div className="w-full h-full" />
                       )}
                     </div>
                     <p className="text-sm text-gray-600 line-clamp-1">
                       {item.product.name}
-                      <span className="text-gray-400"> ×{item.quantity}</span>
+                      <span className="text-gray-500"> ×{item.quantity}</span>
                     </p>
                   </div>
                 ))}
 
                 {/* Show count if more than 2 items */}
                 {order.items.length > 2 && (
-                  <p className="text-xs text-gray-400 pl-13">
+                  <p className="text-xs text-gray-500 pl-13">
                     +{order.items.length - 2} more item
                     {order.items.length - 2 > 1 ? 's' : ''}
                   </p>
@@ -106,7 +103,7 @@ export default function OrdersPage() {
               {/* View details hint */}
               <div className="flex items-center justify-between mt-3
                 pt-3 border-t border-gray-100">
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-gray-500">
                   {order.items.length} item
                   {order.items.length !== 1 ? 's' : ''}
                 </span>

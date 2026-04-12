@@ -15,7 +15,7 @@ export default function ProductDetailPage() {
   const { addItem, loading } = useCart()
 
   const [quantity, setQuantity]   = useState(1)
-  const [feedback, setFeedback]   = useState('')  // success or error message
+  const [feedback, setFeedback]   = useState('')
 
   const { data: product, isLoading, isError } = useProduct(slug)
 
@@ -35,166 +35,166 @@ export default function ProductDetailPage() {
     }
   }
 
+  const ChevronRightIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5L15.75 12l-7.5 7.5" />
+    </svg>
+  )
+
   if (isLoading) return <LoadingSpinner />
   if (isError)   return <ErrorMessage message="Product not found." />
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-8">
 
         {/* Breadcrumb */}
-        <nav className="text-sm text-gray-500 mb-6 flex items-center gap-2">
-          <Link to="/" className="hover:text-blue-600">Home</Link>
-          <span>/</span>
-          <Link to="/products" className="hover:text-blue-600">Products</Link>
-          <span>/</span>
+        <nav className="text-xs text-gray-400 mb-8 flex items-center gap-1.5">
+          <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
+          <ChevronRightIcon />
+          <Link to="/products" className="hover:text-blue-600 transition-colors">Products</Link>
+          <ChevronRightIcon />
           {product?.category && (
             <>
               <Link
                 to={`/products?category=${product.category.slug}`}
-                className="hover:text-blue-600"
+                className="hover:text-blue-600 transition-colors"
               >
                 {product.category.name}
               </Link>
-              <span>/</span>
+              <ChevronRightIcon />
             </>
           )}
-          <span className="text-gray-800 font-medium">{product?.name}</span>
+          <span className="text-gray-600">{product?.name}</span>
         </nav>
 
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          <div className="grid md:grid-cols-2 gap-0">
+        <div className="grid md:grid-cols-2 gap-12">
 
-            {/* Product Image */}
-            <div className="aspect-square bg-gray-100 flex items-center justify-center">
-              {product?.image ? (
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-8xl">📱</span>
-              )}
-            </div>
+          {/* Product Image */}
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex items-center justify-center min-h-96">
+            {product?.image ? (
+              <img
+                src={product.image}
+                alt={product.name}
+                className="max-w-full max-h-full object-contain"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-100 rounded-lg" />
+            )}
+          </div>
 
-            {/* Product Info */}
-            <div className="p-8 flex flex-col justify-between">
-              <div>
-                <p className="text-sm text-blue-600 font-semibold uppercase tracking-wide mb-1">
-                  {product?.brand}
-                </p>
-                <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                  {product?.name}
-                </h1>
+          {/* Product Info */}
+          <div className="flex flex-col">
+            {/* Header */}
+            <div className="mb-6">
+              <p className="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-2">
+                {product?.brand}
+              </p>
+              <h1 className="text-2xl font-bold text-gray-900 mb-4">
+                {product?.name}
+              </h1>
 
-                {/* Price */}
-                <div className="flex items-end gap-3 mb-4">
-                  <span className="text-3xl font-bold text-gray-900">
-                    ₹{Number(product?.price).toLocaleString('en-IN')}
+              {/* Price Section */}
+              <div className="flex items-baseline gap-3 mb-4">
+                <span className="text-2xl font-bold text-gray-900">
+                  ₹{Number(product?.price).toLocaleString('en-IN')}
+                </span>
+                {product?.compare_price && (
+                  <span className="text-sm text-gray-400 line-through">
+                    ₹{Number(product?.compare_price).toLocaleString('en-IN')}
                   </span>
-                  {product?.compare_price && (
-                    <span className="text-lg text-gray-400 line-through mb-0.5">
-                      ₹{Number(product?.compare_price).toLocaleString('en-IN')}
-                    </span>
-                  )}
-                  {product?.discount_percent > 0 && (
-                    <span className="text-green-600 font-bold text-lg mb-0.5">
-                      {product.discount_percent}% off
-                    </span>
-                  )}
-                </div>
-
-                {/* Stock badge */}
-                <p className={`text-sm font-semibold mb-6 ${
-                  product?.stock > 10  ? 'text-green-600'
-                  : product?.stock > 0 ? 'text-orange-500'
-                  : 'text-red-500'
-                }`}>
-                  {product?.stock > 10
-                    ? '✓ In Stock'
-                    : product?.stock > 0
-                    ? `⚠ Only ${product.stock} left`
-                    : '✗ Out of Stock'}
-                </p>
-
-                {product?.description && (
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                    {product.description}
-                  </p>
                 )}
-
-                {/* Quantity selector */}
-                {product?.is_in_stock && (
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="text-sm font-medium text-gray-700">Quantity:</span>
-                    <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden">
-                      <button
-                        onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                        className="px-4 py-2 text-gray-600 hover:bg-gray-50
-                          font-semibold text-lg"
-                      >
-                        −
-                      </button>
-                      <span className="px-4 py-2 font-semibold text-gray-800 min-w-[3rem] text-center">
-                        {quantity}
-                      </span>
-                      <button
-                        onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-                        className="px-4 py-2 text-gray-600 hover:bg-gray-50
-                          font-semibold text-lg"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
+                {product?.discount_percent > 0 && (
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold text-green-700 bg-green-50 border border-green-100 ml-1">
+                    {product.discount_percent}% OFF
+                  </span>
                 )}
               </div>
 
-              {/* Add to cart button + feedback */}
-              <div className="space-y-3">
-                {feedback === 'success' && (
-                  <div className="bg-green-50 border border-green-200 text-green-700
-                    px-4 py-3 rounded-xl text-sm font-medium text-center">
-                    ✓ Added to cart!
-                  </div>
-                )}
-                {feedback === 'error' && (
-                  <div className="bg-red-50 border border-red-200 text-red-700
-                    px-4 py-3 rounded-xl text-sm font-medium text-center">
-                    ✗ Failed to add. Try again.
-                  </div>
-                )}
-
-                <button
-                  onClick={handleAddToCart}
-                  disabled={!product?.is_in_stock || loading}
-                  className="w-full bg-blue-600 text-white font-semibold py-3
-                    rounded-xl hover:bg-blue-700 disabled:bg-gray-300
-                    disabled:cursor-not-allowed transition-colors"
-                >
-                  {!product?.is_in_stock
-                    ? 'Out of Stock'
-                    : loading
-                    ? 'Adding...'
-                    : isLoggedIn
-                    ? 'Add to Cart'
-                    : 'Login to Add to Cart'}
-                </button>
-
-                {isLoggedIn && (
-                  <Link
-                    to="/cart"
-                    className="block w-full text-center border-2 border-blue-600
-                      text-blue-600 font-semibold py-3 rounded-xl hover:bg-blue-50
-                      transition-colors"
-                  >
-                    View Cart
-                  </Link>
-                )}
-              </div>
-
+              {/* Stock Status */}
+              <p className={`text-xs font-semibold mb-6 ${
+                product?.stock > 10  ? 'text-green-600'
+                : product?.stock > 0 ? 'text-amber-600'
+                : 'text-red-600'
+              }`}>
+                {product?.stock > 10
+                  ? 'In Stock'
+                  : product?.stock > 0
+                  ? `Only ${product.stock} left`
+                  : 'Out of Stock'}
+              </p>
             </div>
+
+            {/* Description */}
+            {product?.description && (
+              <div className="mb-6">
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {product.description}
+                </p>
+              </div>
+            )}
+
+            {/* Divider */}
+            <div className="border-t border-gray-100 my-6" />
+
+            {/* Quantity Selector */}
+            {product?.is_in_stock && (
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">Quantity</label>
+                <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden w-fit">
+                  <button
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    className="px-3.5 py-2 text-gray-600 hover:bg-gray-50 font-semibold text-lg transition-colors"
+                  >
+                    −
+                  </button>
+                  <span className="px-4 py-2 font-semibold text-gray-800 min-w-12 text-center border-l border-r border-gray-200">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
+                    className="px-3.5 py-2 text-gray-600 hover:bg-gray-50 font-semibold text-lg transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Feedback Messages */}
+            {feedback === 'success' && (
+              <div className="bg-green-50 border border-green-200 text-green-700 px-3.5 py-2.5 rounded-lg text-sm font-medium text-center mb-3">
+                Added to cart successfully
+              </div>
+            )}
+            {feedback === 'error' && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-3.5 py-2.5 rounded-lg text-sm font-medium text-center mb-3">
+                Failed to add to cart. Please try again.
+              </div>
+            )}
+
+            {/* Add to Cart Button */}
+            <button
+              onClick={handleAddToCart}
+              disabled={!product?.is_in_stock || loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 disabled:cursor-not-allowed mb-3"
+            >
+              {!product?.is_in_stock
+                ? 'Out of Stock'
+                : loading
+                ? 'Adding...'
+                : 'Add to Cart'}
+            </button>
+
+            {/* View Cart Link */}
+            {isLoggedIn && (
+              <Link
+                to="/cart"
+                className="inline-flex items-center justify-center border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-lg bg-white transition-colors duration-150"
+              >
+                View Cart
+              </Link>
+            )}
           </div>
         </div>
 

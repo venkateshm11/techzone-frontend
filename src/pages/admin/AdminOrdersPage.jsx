@@ -53,11 +53,11 @@ export default function AdminOrdersPage() {
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
-              className={`px-4 py-2 rounded-xl text-sm font-semibold
-                transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold
+                transition-colors border ${
                 statusFilter === s
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-600 hover:bg-gray-50 shadow-sm'
+                  ? 'bg-blue-600 text-white border-blue-600'
+                  : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-gray-300'
               }`}
             >
               {s || 'All Orders'}
@@ -69,26 +69,26 @@ export default function AdminOrdersPage() {
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b border-gray-100">
                 <tr>
-                  <th className="text-left px-5 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Order
                   </th>
-                  <th className="text-left px-4 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Customer
                   </th>
-                  <th className="text-left px-4 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Items
                   </th>
-                  <th className="text-left px-4 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Total
                   </th>
-                  <th className="text-left px-4 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Payment
                   </th>
-                  <th className="text-left px-4 py-3.5 font-semibold text-gray-600">
+                  <th className="text-left px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                     Status
                   </th>
                 </tr>
@@ -101,7 +101,7 @@ export default function AdminOrdersPage() {
                     {/* Order ID and date */}
                     <td className="px-5 py-4">
                       <p className="font-bold text-gray-900">#{order.id}</p>
-                      <p className="text-xs text-gray-400 mt-0.5">
+                      <p className="text-xs text-gray-500 mt-0.5">
                         {new Date(order.created_at).toLocaleDateString('en-IN', {
                           day: 'numeric', month: 'short', year: 'numeric'
                         })}
@@ -110,10 +110,10 @@ export default function AdminOrdersPage() {
 
                     {/* Customer */}
                     <td className="px-4 py-4">
-                      <p className="font-medium text-gray-800">
+                      <p className="font-semibold text-gray-900">
                         {order.user_name}
                       </p>
-                      <p className="text-xs text-gray-400">{order.user_email}</p>
+                      <p className="text-xs text-gray-500">{order.user_email}</p>
                     </td>
 
                     {/* Items count */}
@@ -129,12 +129,12 @@ export default function AdminOrdersPage() {
 
                     {/* Payment status */}
                     <td className="px-4 py-4">
-                      <span className={`text-xs font-semibold ${
+                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-md border inline-flex ${
                         order.payment_status === 'PAID'
-                          ? 'text-green-600'
+                          ? 'bg-green-50 text-green-700 border-green-200'
                           : order.payment_status === 'FAILED'
-                          ? 'text-red-600'
-                          : 'text-gray-500'
+                          ? 'bg-red-50 text-red-700 border-red-200'
+                          : 'bg-gray-50 text-gray-600 border-gray-200'
                       }`}>
                         {order.payment_status}
                       </span>
