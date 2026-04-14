@@ -77,11 +77,9 @@ export default function Navbar() {
             </Link>
           )}
 
-          {!isLoggedIn && (
-            <Link to="/create-admin" className="text-sm font-semibold text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition-colors">
-              Register as Admin
-            </Link>
-          )}
+          <Link to="/create-admin" className="px-4 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700">
+            Register as Admin
+          </Link>
 
           {/* Cart */}
           <Link to="/cart" className="relative text-gray-600 hover:text-blue-600 transition-colors">
