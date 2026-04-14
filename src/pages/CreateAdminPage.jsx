@@ -10,8 +10,7 @@ export default function CreateAdminPage() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    firstName: '',
-    lastName: '',
+    name: '',
   })
   const [adminCount, setAdminCount] = useState(null)
   const [error, setError] = useState('')
@@ -55,8 +54,8 @@ export default function CreateAdminPage() {
       return
     }
 
-    if (!formData.firstName.trim()) {
-      setError('First name is required')
+    if (!formData.name.trim()) {
+      setError('Name is required')
       setLoading(false)
       return
     }
@@ -65,8 +64,7 @@ export default function CreateAdminPage() {
       const response = await bootstrapSuperuser(
         formData.email,
         formData.password,
-        formData.firstName,
-        formData.lastName
+        formData.name
       )
 
       setSuccess(true)
@@ -178,34 +176,18 @@ export default function CreateAdminPage() {
 
           {/* First Name */}
           <div>
-            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-              First Name
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              Full Name
             </label>
             <input
               type="text"
-              id="firstName"
-              name="firstName"
-              value={formData.firstName}
+              id="name"
+              name="name"
+              value={formData.name}
               onChange={handleChange}
-              placeholder="Admin"
+              placeholder="Admin User"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
-            />
-          </div>
-
-          {/* Last Name */}
-          <div>
-            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="User"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
 

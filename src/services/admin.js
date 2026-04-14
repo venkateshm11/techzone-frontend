@@ -14,12 +14,11 @@ export const checkAdminCount = () => {
  * This endpoint allows up to 5 admin accounts.
  * Subsequent calls after 5 admins exist will get a 403 Forbidden.
  */
-export const bootstrapSuperuser = (email, password, firstName, lastName) => {
+export const bootstrapSuperuser = (email, password, name) => {
   return api.post('/api/auth/bootstrap-superuser/', {
     email,
     password,
-    first_name: firstName,
-    last_name: lastName,
+    name,  // Full name field
   }).then((res) => res.data)
 }
 
