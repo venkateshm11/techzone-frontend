@@ -16,6 +16,7 @@ import CheckoutPage             from './pages/CheckoutPage'
 import OrderConfirmationPage    from './pages/OrderConfirmationPage'
 import OrdersPage               from './pages/OrdersPage'
 import OrderDetailPage          from './pages/OrderDetailPage'
+import CreateAdminPage          from './pages/CreateAdminPage'
 import AdminDashboard           from './pages/admin/AdminDashboard'
 import AdminProductsPage        from './pages/admin/AdminProductsPage'
 import AdminProductFormPage     from './pages/admin/AdminProductFormPage'
@@ -36,6 +37,7 @@ export default function App() {
               <Route path="/products/:slug" element={<ProductDetailPage />} />
               <Route path="/login"          element={<LoginPage />} />
               <Route path="/register"       element={<RegisterPage />} />
+              <Route path="/create-admin"   element={<CreateAdminPage />} />
 
               {/* Customer protected */}
               <Route path="/cart"     element={<PrivateRoute element={<CartPage />} />} />
