@@ -11,8 +11,8 @@ export const checkAdminCount = () => {
 
 /**
  * Create admin account via frontend.
- * This endpoint allows up to 5 admin accounts.
- * Subsequent calls after 5 admins exist will get a 403 Forbidden.
+ * This endpoint allows up to 3 admin accounts.
+ * Subsequent calls after 3 admins exist will get a 403 Forbidden.
  */
 export const bootstrapSuperuser = (email, password, name) => {
   return api.post('/api/auth/bootstrap-superuser/', {
