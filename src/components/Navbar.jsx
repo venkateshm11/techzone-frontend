@@ -1,11 +1,10 @@
 // frontend/src/components/Navbar.jsx
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCategories } from '../hooks/useProducts'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
-import { checkAdminCount } from '../services/admin'
 
 export default function Navbar() {
   const { data: categories }              = useCategories()
@@ -14,14 +13,6 @@ export default function Navbar() {
   const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [userDropdownOpen, setUserDropdownOpen] = useState(false)
-  const [canCreateAdmin, setCanCreateAdmin] = useState(false)
-
-  // Check if admins can be created
-  useEffect(() => {
-    checkAdminCount()
-      .then(data => setCanCreateAdmin(data.can_create_admin))
-      .catch(err => console.error('Error checking admin count:', err))
-  }, [])
 
   const handleLogout = () => {
     logout()
@@ -86,7 +77,7 @@ export default function Navbar() {
             </Link>
           )}
 
-          {canCreateAdmin && !isLoggedIn && (
+          {!isLoggedIn && (
             <Link to="/create-admin" className="text-sm font-semibold text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition-colors">
               Register as Admin
             </Link>
@@ -181,7 +172,7 @@ export default function Navbar() {
               </Link>
             )}
 
-            {canCreateAdmin && !isLoggedIn && (
+            {!isLoggedIn && (
               <Link
                 to="/create-admin"
                 onClick={() => setMobileMenuOpen(false)}
