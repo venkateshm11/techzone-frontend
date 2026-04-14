@@ -3,9 +3,16 @@
 import api from './api'
 
 /**
- * Create the first superuser/admin account via frontend.
- * This endpoint only accepts the first admin creation.
- * Subsequent calls will get a 403 Forbidden.
+ * Check how many admin accounts exist and if more can be created.
+ */
+export const checkAdminCount = () => {
+  return api.get('/api/auth/admin-count/').then((res) => res.data)
+}
+
+/**
+ * Create admin account via frontend.
+ * This endpoint allows up to 5 admin accounts.
+ * Subsequent calls after 5 admins exist will get a 403 Forbidden.
  */
 export const bootstrapSuperuser = (email, password, firstName, lastName) => {
   return api.post('/api/auth/bootstrap-superuser/', {

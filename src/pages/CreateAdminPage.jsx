@@ -1,8 +1,8 @@
 // frontend/src/pages/CreateAdminPage.jsx
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { bootstrapSuperuser } from '../services/admin'
+import { bootstrapSuperuser, checkAdminCount } from '../services/admin'
 import ErrorMessage from '../components/ErrorMessage'
 
 export default function CreateAdminPage() {
@@ -13,9 +13,23 @@ export default function CreateAdminPage() {
     firstName: '',
     lastName: '',
   })
+  const [adminCount, setAdminCount] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+
+  // Check admin count on page load
+  useEffect(() => {
+    checkAdminCount()
+      .then(data => {
+        setAdminCount(data)
+        // Redirect if max admins reached
+        if (!data.can_create_admin) {
+          setError('Maximum number of admin accounts already created.')
+        }
+      })
+      .catch(err => console.error('Error checking admin count:', err))
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -48,7 +62,7 @@ export default function CreateAdminPage() {
     }
 
     try {
-      await bootstrapSuperuser(
+      const response = await bootstrapSuperuser(
         formData.email,
         formData.password,
         formData.firstName,
@@ -81,11 +95,49 @@ export default function CreateAdminPage() {
     )
   }
 
+  if (adminCount === null) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-gray-500">Loading...</div>
+      </div>
+    )
+  }
+
+  if (!adminCount.can_create_admin) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div className="bg-white rounded-lg shadow p-8 text-center max-w-md">
+          <div className="mb-4 text-red-500 text-5xl">✕</div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Limit Reached</h2>
+          <p className="text-gray-600">
+            Maximum {adminCount.max_admins} admin accounts have been created.
+          </p>
+          <button
+            onClick={() => navigate('/login')}
+            className="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg"
+          >
+            Go to Login
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-8">
       <div className="bg-white rounded-lg shadow p-8 max-w-md w-full">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Admin Account</h1>
-        <p className="text-gray-600 mb-6">Set up your first admin/superuser account for the TechZone Shop</p>
+        <p className="text-gray-600 mb-2">Set up an admin account for the TechZone Shop</p>
+        
+        {/* Admin count display */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6">
+          <p className="text-sm text-blue-900">
+            <strong>Admins created:</strong> {adminCount.admin_count} / {adminCount.max_admins}
+          </p>
+          <p className="text-sm text-blue-700 mt-1">
+            {adminCount.admins_remaining} slot{adminCount.admins_remaining !== 1 ? 's' : ''} remaining
+          </p>
+        </div>
 
         {error && <ErrorMessage message={error} />}
 
@@ -172,7 +224,7 @@ export default function CreateAdminPage() {
         </form>
 
         <p className="text-center text-sm text-gray-600 mt-6">
-          This endpoint is only available before the first admin is created.
+          Maximum {adminCount.max_admins} admin accounts can be created.
         </p>
       </div>
     </div>
