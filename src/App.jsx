@@ -20,6 +20,7 @@ import CreateAdminPage          from './pages/CreateAdminPage'
 import AdminDashboard           from './pages/admin/AdminDashboard'
 import AdminProductsPage        from './pages/admin/AdminProductsPage'
 import AdminProductFormPage     from './pages/admin/AdminProductFormPage'
+import AdminCategoriesPage      from './pages/admin/AdminCategoriesPage'
 import AdminOrdersPage          from './pages/admin/AdminOrdersPage'
 import NotFoundPage             from './pages/NotFoundPage'
 
@@ -62,6 +63,9 @@ export default function App() {
               } />
               <Route path="/admin/products/:id/edit" element={
                 <PrivateRoute adminOnly element={<AdminProductFormPage />} />
+              } />
+              <Route path="/admin/categories" element={
+                <PrivateRoute adminOnly element={<AdminCategoriesPage />} />
               } />
               <Route path="/admin/orders" element={
                 <PrivateRoute adminOnly element={<AdminOrdersPage />} />

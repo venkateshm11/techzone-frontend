@@ -45,3 +45,23 @@ export const getAdminOrders = (params = {}) =>
 
 export const updateOrderStatus = (id, status) =>
   api.put(`/api/admin/orders/${id}/status/`, { status }).then((res) => res.data)
+
+/**
+ * Admin category management
+ */
+export const getAdminCategories = () =>
+  api.get('/api/admin/categories/').then((res) => res.data)
+
+export const createCategory = (name, slug, description = '') =>
+  api.post('/api/admin/categories/', {
+    name,
+    slug,
+    description,
+    is_active: true,
+  }).then((res) => res.data)
+
+export const updateCategory = (slug, data) =>
+  api.put(`/api/admin/categories/${slug}/`, data).then((res) => res.data)
+
+export const deleteCategory = (slug) =>
+  api.delete(`/api/admin/categories/${slug}/`)
